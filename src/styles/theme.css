@@ -1,134 +1,386 @@
 /*
- * Amethyst Ether — Design Tokens
- * High-key editorial design system with violet/lavender tonal palette
+ * Ki Design System — Design Tokens
+ * Editorial design system with violet/amethyst tonal palette
  * Font: Plus Jakarta Sans
+ * Scoped to .amethyst-theme to prevent global style leaks
  */
 
+/* ─── Build-time Tailwind tokens ─────────────────────────────────────────
+ * @theme inline is processed at build time by Tailwind v4.
+ * These map token names (e.g. bg-primary) to CSS variables.
+ * They do NOT leak to :root at runtime — they're compile-time aliases.
+ * ─────────────────────────────────────────────────────────────────────── */
 @theme inline {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-headline: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* ─── Radii ───────────────────────────────────────── */
+  /* ─── Radii ─────────────────────────────────────────── */
   --radius: 0.75rem;
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* ─── Amethyst Ether Colors ───────────────────────── */
-  --color-primary: #68548d;
-  --color-primary-dim: #5c4880;
-  --color-primary-container: #ebdcff;
-  --color-primary-fixed: #ebdcff;
-  --color-primary-fixed-dim: #dfccff;
-  --color-on-primary: #fdf5ff;
-  --color-on-primary-container: #5b487f;
-  --color-on-primary-fixed: #48356b;
-  --color-on-primary-fixed-variant: #65518a;
-  --color-inverse-primary: #d6beff;
+  /* ─── Color token references (resolved from CSS vars below) ─ */
+  --color-primary: var(--ki-primary);
+  --color-primary-dim: var(--ki-primary-dim);
+  --color-primary-container: var(--ki-primary-container);
+  --color-primary-fixed: var(--ki-primary-fixed);
+  --color-primary-fixed-dim: var(--ki-primary-fixed-dim);
+  --color-on-primary: var(--ki-on-primary);
+  --color-on-primary-container: var(--ki-on-primary-container);
+  --color-on-primary-fixed: var(--ki-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--ki-on-primary-fixed-variant);
+  --color-inverse-primary: var(--ki-inverse-primary);
 
-  --color-secondary: #615e62;
-  --color-secondary-dim: #555256;
-  --color-secondary-container: #e6e1e5;
-  --color-secondary-fixed: #e6e1e5;
-  --color-secondary-fixed-dim: #d8d3d7;
-  --color-on-secondary: #fdf7fb;
-  --color-on-secondary-container: #535154;
-  --color-on-secondary-fixed: #413f42;
-  --color-on-secondary-fixed-variant: #5d5b5e;
+  --color-secondary: var(--ki-secondary);
+  --color-secondary-dim: var(--ki-secondary-dim);
+  --color-secondary-container: var(--ki-secondary-container);
+  --color-secondary-fixed: var(--ki-secondary-fixed);
+  --color-secondary-fixed-dim: var(--ki-secondary-fixed-dim);
+  --color-on-secondary: var(--ki-on-secondary);
+  --color-on-secondary-container: var(--ki-on-secondary-container);
+  --color-on-secondary-fixed: var(--ki-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--ki-on-secondary-fixed-variant);
 
-  --color-tertiary: #665c69;
-  --color-tertiary-dim: #59505d;
-  --color-tertiary-container: #f8e9fa;
-  --color-tertiary-fixed: #f8e9fa;
-  --color-tertiary-fixed-dim: #e9dbeb;
-  --color-on-tertiary: #fff6fd;
-  --color-on-tertiary-container: #5f5562;
-  --color-on-tertiary-fixed: #4c4350;
-  --color-on-tertiary-fixed-variant: #695f6d;
+  --color-tertiary: var(--ki-tertiary);
+  --color-tertiary-dim: var(--ki-tertiary-dim);
+  --color-tertiary-container: var(--ki-tertiary-container);
+  --color-tertiary-fixed: var(--ki-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--ki-tertiary-fixed-dim);
+  --color-on-tertiary: var(--ki-on-tertiary);
+  --color-on-tertiary-container: var(--ki-on-tertiary-container);
+  --color-on-tertiary-fixed: var(--ki-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--ki-on-tertiary-fixed-variant);
 
-  --color-error: #9e3f4e;
-  --color-error-dim: #4f0116;
-  --color-error-container: #ff8b9a;
-  --color-on-error: #fff7f7;
-  --color-on-error-container: #782232;
+  --color-error: var(--ki-error);
+  --color-error-dim: var(--ki-error-dim);
+  --color-error-container: var(--ki-error-container);
+  --color-on-error: var(--ki-on-error);
+  --color-on-error-container: var(--ki-on-error-container);
 
-  --color-surface: #f9f9fa;
-  --color-surface-dim: #d3dbdf;
-  --color-surface-bright: #f9f9fa;
-  --color-surface-variant: #dde3e7;
-  --color-surface-tint: #68548d;
-  --color-surface-container: #ebeef0;
-  --color-surface-container-low: #f2f4f5;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-high: #e4e9ec;
-  --color-surface-container-highest: #dde3e7;
-  --color-on-surface: #2d3336;
-  --color-on-surface-variant: #596063;
-  --color-inverse-surface: #0c0e0f;
-  --color-inverse-on-surface: #9c9d9e;
+  --color-surface: var(--ki-surface);
+  --color-surface-dim: var(--ki-surface-dim);
+  --color-surface-bright: var(--ki-surface-bright);
+  --color-surface-variant: var(--ki-surface-variant);
+  --color-surface-tint: var(--ki-surface-tint);
+  --color-surface-container: var(--ki-surface-container);
+  --color-surface-container-low: var(--ki-surface-container-low);
+  --color-surface-container-lowest: var(--ki-surface-container-lowest);
+  --color-surface-container-high: var(--ki-surface-container-high);
+  --color-surface-container-highest: var(--ki-surface-container-highest);
+  --color-on-surface: var(--ki-on-surface);
+  --color-on-surface-variant: var(--ki-on-surface-variant);
+  --color-inverse-surface: var(--ki-inverse-surface);
+  --color-inverse-on-surface: var(--ki-inverse-on-surface);
 
-  --color-background: #f9f9fa;
-  --color-on-background: #2d3336;
+  --color-background: var(--ki-background);
+  --color-on-background: var(--ki-on-background);
 
-  --color-outline: #757c7f;
-  --color-outline-variant: #acb3b6;
+  --color-outline: var(--ki-outline);
+  --color-outline-variant: var(--ki-outline-variant);
 
-  /* ─── Semantic Aliases (shadcn compatibility) ────── */
-  --color-border: #e4e9ec;
-  --color-input: #e4e9ec;
-  --color-ring: #68548d;
-  --color-foreground: #2d3336;
+  /* ─── Semantic aliases (shadcn compatibility) ─── */
+  --color-border: var(--ki-border);
+  --color-input: var(--ki-input);
+  --color-ring: var(--ki-ring);
+  --color-foreground: var(--ki-foreground);
+  --color-muted: var(--ki-muted);
+  --color-muted-foreground: var(--ki-muted-foreground);
+  --color-accent: var(--ki-accent);
+  --color-accent-foreground: var(--ki-accent-foreground);
+  --color-popover: var(--ki-popover);
+  --color-popover-foreground: var(--ki-popover-foreground);
+  --color-card: var(--ki-card);
+  --color-card-foreground: var(--ki-card-foreground);
+  --color-destructive: var(--ki-destructive);
+  --color-destructive-foreground: var(--ki-destructive-foreground);
 
-  --color-muted: #f2f4f5;
-  --color-muted-foreground: #596063;
+  --color-chart-1: var(--ki-chart-1);
+  --color-chart-2: var(--ki-chart-2);
+  --color-chart-3: var(--ki-chart-3);
+  --color-chart-4: var(--ki-chart-4);
+  --color-chart-5: var(--ki-chart-5);
 
-  --color-accent: #ebdcff;
-  --color-accent-foreground: #5b487f;
+  --color-sidebar: var(--ki-sidebar);
+  --color-sidebar-foreground: var(--ki-sidebar-foreground);
+  --color-sidebar-primary: var(--ki-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--ki-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--ki-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--ki-sidebar-accent-foreground);
+  --color-sidebar-border: var(--ki-sidebar-border);
+  --color-sidebar-ring: var(--ki-sidebar-ring);
 
-  --color-popover: #ffffff;
-  --color-popover-foreground: #2d3336;
-
-  --color-card: #ffffff;
-  --color-card-foreground: #2d3336;
-
-  --color-destructive: #9e3f4e;
-  --color-destructive-foreground: #fff7f7;
-
-  --color-chart-1: #68548d;
-  --color-chart-2: #5c4880;
-  --color-chart-3: #ebdcff;
-  --color-chart-4: #665c69;
-  --color-chart-5: #f8e9fa;
-
-  --color-sidebar: #f2f4f5;
-  --color-sidebar-foreground: #2d3336;
-  --color-sidebar-primary: #68548d;
-  --color-sidebar-primary-foreground: #fdf5ff;
-  --color-sidebar-accent: #ebdcff;
-  --color-sidebar-accent-foreground: #5b487f;
-  --color-sidebar-border: #e4e9ec;
-  --color-sidebar-ring: #68548d;
+  /* ─── Animations ─────────────────────────────────────────── */
+  --animate-shimmer: shimmer 2s linear infinite;
 }
 
-/* ─── Glass & Editorial Effects ─────────────────────── */
+/* ─── Light Mode Tokens (scoped to .amethyst-theme) ──────────────────── */
+.amethyst-theme {
+  /* Primary — Amethyst violet */
+  --ki-primary: #68548d;
+  --ki-primary-dim: #5c4880;
+  --ki-primary-container: #ebdcff;
+  --ki-primary-fixed: #ebdcff;
+  --ki-primary-fixed-dim: #dfccff;
+  --ki-on-primary: #fdf5ff;
+  --ki-on-primary-container: #5b487f;
+  --ki-on-primary-fixed: #48356b;
+  --ki-on-primary-fixed-variant: #65518a;
+  --ki-inverse-primary: #d6beff;
+
+  /* Secondary */
+  --ki-secondary: #615e62;
+  --ki-secondary-dim: #555256;
+  --ki-secondary-container: #e6e1e5;
+  --ki-secondary-fixed: #e6e1e5;
+  --ki-secondary-fixed-dim: #d8d3d7;
+  --ki-on-secondary: #fdf7fb;
+  --ki-on-secondary-container: #535154;
+  --ki-on-secondary-fixed: #413f42;
+  --ki-on-secondary-fixed-variant: #5d5b5e;
+
+  /* Tertiary */
+  --ki-tertiary: #665c69;
+  --ki-tertiary-dim: #59505d;
+  --ki-tertiary-container: #f8e9fa;
+  --ki-tertiary-fixed: #f8e9fa;
+  --ki-tertiary-fixed-dim: #e9dbeb;
+  --ki-on-tertiary: #fff6fd;
+  --ki-on-tertiary-container: #5f5562;
+  --ki-on-tertiary-fixed: #4c4350;
+  --ki-on-tertiary-fixed-variant: #695f6d;
+
+  /* Error */
+  --ki-error: #9e3f4e;
+  --ki-error-dim: #4f0116;
+  --ki-error-container: #ff8b9a;
+  --ki-on-error: #fff7f7;
+  --ki-on-error-container: #782232;
+
+  /* Surface */
+  --ki-surface: #f9f9fa;
+  --ki-surface-dim: #d3dbdf;
+  --ki-surface-bright: #f9f9fa;
+  --ki-surface-variant: #dde3e7;
+  --ki-surface-tint: #68548d;
+  --ki-surface-container: #ebeef0;
+  --ki-surface-container-low: #f2f4f5;
+  --ki-surface-container-lowest: #ffffff;
+  --ki-surface-container-high: #e4e9ec;
+  --ki-surface-container-highest: #dde3e7;
+  --ki-on-surface: #2d3336;
+  --ki-on-surface-variant: #596063;
+  --ki-inverse-surface: #0c0e0f;
+  --ki-inverse-on-surface: #9c9d9e;
+
+  /* Background */
+  --ki-background: #f9f9fa;
+  --ki-on-background: #2d3336;
+
+  /* Outline */
+  --ki-outline: #757c7f;
+  --ki-outline-variant: #acb3b6;
+
+  /* Semantic aliases */
+  --ki-border: #e4e9ec;
+  --ki-input: #e4e9ec;
+  --ki-ring: #68548d;
+  --ki-foreground: #2d3336;
+  --ki-muted: #f2f4f5;
+  --ki-muted-foreground: #596063;
+  --ki-accent: #ebdcff;
+  --ki-accent-foreground: #5b487f;
+  --ki-popover: #ffffff;
+  --ki-popover-foreground: #2d3336;
+  --ki-card: #ffffff;
+  --ki-card-foreground: #2d3336;
+  --ki-destructive: #9e3f4e;
+  --ki-destructive-foreground: #fff7f7;
+
+  /* Charts */
+  --ki-chart-1: #68548d;
+  --ki-chart-2: #5c4880;
+  --ki-chart-3: #ebdcff;
+  --ki-chart-4: #665c69;
+  --ki-chart-5: #f8e9fa;
+
+  /* Sidebar */
+  --ki-sidebar: #f2f4f5;
+  --ki-sidebar-foreground: #2d3336;
+  --ki-sidebar-primary: #68548d;
+  --ki-sidebar-primary-foreground: #fdf5ff;
+  --ki-sidebar-accent: #ebdcff;
+  --ki-sidebar-accent-foreground: #5b487f;
+  --ki-sidebar-border: #e4e9ec;
+  --ki-sidebar-ring: #68548d;
+}
+
+/* ─── Dark Mode Tokens ────────────────────────────────────────────────── */
+.amethyst-theme.dark {
+  /* Primary — lighter amethyst on dark */
+  --ki-primary: #d6beff;
+  --ki-primary-dim: #c3a8f7;
+  --ki-primary-container: #4e3b72;
+  --ki-primary-fixed: #ebdcff;
+  --ki-primary-fixed-dim: #dfccff;
+  --ki-on-primary: #38265b;
+  --ki-on-primary-container: #e2cfff;
+  --ki-on-primary-fixed: #48356b;
+  --ki-on-primary-fixed-variant: #65518a;
+  --ki-inverse-primary: #68548d;
+
+  /* Secondary */
+  --ki-secondary: #cac5cb;
+  --ki-secondary-dim: #b5b0b6;
+  --ki-secondary-container: #48464a;
+  --ki-secondary-fixed: #e6e1e5;
+  --ki-secondary-fixed-dim: #d8d3d7;
+  --ki-on-secondary: #332f34;
+  --ki-on-secondary-container: #d8d3d7;
+  --ki-on-secondary-fixed: #413f42;
+  --ki-on-secondary-fixed-variant: #5d5b5e;
+
+  /* Tertiary */
+  --ki-tertiary: #d8c6da;
+  --ki-tertiary-dim: #c4b1c6;
+  --ki-tertiary-container: #4d4451;
+  --ki-tertiary-fixed: #f8e9fa;
+  --ki-tertiary-fixed-dim: #e9dbeb;
+  --ki-on-tertiary: #372d3b;
+  --ki-on-tertiary-container: #e9dbeb;
+  --ki-on-tertiary-fixed: #4c4350;
+  --ki-on-tertiary-fixed-variant: #695f6d;
+
+  /* Error */
+  --ki-error: #ffb3bc;
+  --ki-error-dim: #e8828e;
+  --ki-error-container: #7b2535;
+  --ki-on-error: #68001a;
+  --ki-on-error-container: #ffdadb;
+
+  /* Surface — dark */
+  --ki-surface: #141416;
+  --ki-surface-dim: #0c0e0f;
+  --ki-surface-bright: #1e2022;
+  --ki-surface-variant: #3a4044;
+  --ki-surface-tint: #d6beff;
+  --ki-surface-container: #1a1d1f;
+  --ki-surface-container-low: #161819;
+  --ki-surface-container-lowest: #0c0e0f;
+  --ki-surface-container-high: #222527;
+  --ki-surface-container-highest: #2d3033;
+  --ki-on-surface: #e0e3e5;
+  --ki-on-surface-variant: #b5bec2;
+  --ki-inverse-surface: #e0e3e5;
+  --ki-inverse-on-surface: #2d3336;
+
+  /* Background */
+  --ki-background: #0c0e0f;
+  --ki-on-background: #e0e3e5;
+
+  /* Outline */
+  --ki-outline: #7a8386;
+  --ki-outline-variant: #3a4044;
+
+  /* Semantic aliases */
+  --ki-border: #2d3033;
+  --ki-input: #2d3033;
+  --ki-ring: #d6beff;
+  --ki-foreground: #e0e3e5;
+  --ki-muted: #1a1d1f;
+  --ki-muted-foreground: #b5bec2;
+  --ki-accent: #4e3b72;
+  --ki-accent-foreground: #e2cfff;
+  --ki-popover: #1a1d1f;
+  --ki-popover-foreground: #e0e3e5;
+  --ki-card: #1a1d1f;
+  --ki-card-foreground: #e0e3e5;
+  --ki-destructive: #ffb3bc;
+  --ki-destructive-foreground: #68001a;
+
+  /* Charts */
+  --ki-chart-1: #d6beff;
+  --ki-chart-2: #c3a8f7;
+  --ki-chart-3: #4e3b72;
+  --ki-chart-4: #d8c6da;
+  --ki-chart-5: #4d4451;
+
+  /* Sidebar */
+  --ki-sidebar: #141416;
+  --ki-sidebar-foreground: #e0e3e5;
+  --ki-sidebar-primary: #d6beff;
+  --ki-sidebar-primary-foreground: #38265b;
+  --ki-sidebar-accent: #4e3b72;
+  --ki-sidebar-accent-foreground: #e2cfff;
+  --ki-sidebar-border: #2d3033;
+  --ki-sidebar-ring: #d6beff;
+}
+
+/* ─── Scoped base resets (only inside .amethyst-theme) ───────────────── */
 @layer base {
-  * {
+  .amethyst-theme * {
     @apply border-border;
   }
 
-  body {
+  .amethyst-theme {
     @apply bg-background text-foreground font-sans antialiased;
   }
 }
 
-/* Ethereal shimmer animation for skeletons */
+/* ─── Animations ─────────────────────────────────────────────────────── */
 @keyframes shimmer {
-  from {
-    background-position: 200% 0;
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ─── Design System Utilities ────────────────────────────────────────── */
+/* These classes implement the spec's named patterns.
+ * Use them directly: className="ki-gradient-cta", etc.
+ */
+@layer utilities {
+  /**
+   * ki-gradient-cta — The "Velvet" gradient from DESIGN.md §2.
+   * 135° linear gradient: primary → primary_dim.
+   * Use on hero sections and primary CTAs.
+   */
+  .ki-gradient-cta {
+    background-image: linear-gradient(
+      135deg,
+      var(--ki-primary) 0%,
+      var(--ki-primary-dim) 100%
+    );
+    color: var(--ki-on-primary);
   }
-  to {
-    background-position: -200% 0;
+
+  /**
+   * ki-glass — Glassmorphism from DESIGN.md §4.
+   * backdrop-blur-[24px] + surface at 80% opacity.
+   * Use on navbars and floating action elements.
+   */
+  .ki-glass {
+    background-color: color-mix(in srgb, var(--ki-surface) 80%, transparent);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  /**
+   * ki-content-veil — The "Content Veil" from DESIGN.md §5.
+   * Gradient overlay that fades content into the ether.
+   * Apply to a position:absolute overlay at the bottom of a scroll container.
+   */
+  .ki-content-veil {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8rem;
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--ki-surface) 100%
+    );
+    pointer-events: none;
   }
 }

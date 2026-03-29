@@ -1,7 +1,7 @@
 {
   "name": "@iamkiet/ki-design-system",
-  "version": "1.0.0",
-  "description": "Amethyst Ether — A high-key editorial React component library",
+  "version": "1.1.0",
+  "description": "Ki Design System — An editorial React component library built on shadcn/ui",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -49,7 +49,6 @@
     "cmdk": "^1.1.1",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.577.0",
-    "next-themes": "^0.4.6",
     "radix-ui": "^1.4.3",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0"

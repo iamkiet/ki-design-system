@@ -22,20 +22,19 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       formats: ["es"],
-      fileName: "index",
     },
     rollupOptions: {
       external: [
         "react",
         "react-dom",
         "react/jsx-runtime",
+        "radix-ui",
         /^@radix-ui\/react-/,
         "class-variance-authority",
         "clsx",
         "cmdk",
         "input-otp",
         "lucide-react",
-        "next-themes",
         "sonner",
         "tailwind-merge",
       ],
@@ -45,12 +44,16 @@ export default defineConfig({
           "react-dom": "ReactDOM",
           "react/jsx-runtime": "jsxRuntime",
         },
+        // Rename the asset so CSS lands at dist/styles.css
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === "style.css") return "styles.css";
+          if (assetInfo.name === "styles.css") return "styles.css";
           return assetInfo.name ?? "asset";
         },
+        // JS chunk naming
+        entryFileNames: "[name].js",
       },
     },
-    cssCodeSplit: false,
+    cssCodeSplit: true,
   },
 });
+

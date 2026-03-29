@@ -20,6 +20,8 @@ const buttonVariants = cva(
           "hover:bg-surface-container-high hover:text-on-surface",
         link: "text-primary underline-offset-4 hover:underline",
         tertiary: "text-primary font-bold text-[0.75rem] uppercase tracking-widest hover:opacity-70",
+        /** DESIGN.md §2 "Glass & Gradient Rule" — 135° velvet gradient for CTAs */
+        gradient: "ki-gradient-cta hover:opacity-90 shadow-[0_4px_20px_rgba(104,84,141,0.25)]",
       },
       size: {
         default: "h-11 px-8 py-3",

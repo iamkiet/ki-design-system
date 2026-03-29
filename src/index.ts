@@ -1,5 +1,11 @@
+// Styles — consumers import these explicitly: import "@iamkiet/ki-design-system/styles.css"
+// This import triggers Vite to process and emit the stylesheet during build.
+import "./styles/index.css";
+
+
 export * from "./components/ui/button";
 export * from "./components/ui/input";
+
 export * from "./components/ui/switch";
 export * from "./components/ui/checkbox";
 export * from "./components/ui/badge";
@@ -20,6 +26,17 @@ export * from "./components/ui/label";
 export * from "./components/ui/separator";
 export * from "./components/ui/radio-group";
 export * from "./components/ui/dialog";
+export * from "./components/ui/content-veil";
+export * from "./components/ui/glass-panel";
 
-export * from "./provider";
+// Provider — KiProvider is the primary export; AmethystProvider is a deprecated alias
+export {
+  KiProvider,
+  AmethystProvider,
+  KiThemeContext,
+  useKiTheme,
+  type KiProviderProps,
+  type KiThemeContextValue,
+} from "./provider";
+
 export * from "./lib/utils";

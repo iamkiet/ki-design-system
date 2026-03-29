@@ -10,7 +10,7 @@ const alertVariants = cva(
       variant: {
         default: "bg-primary-container/30 text-on-primary-container",
         destructive:
-          "bg-error-container/30 text-on-error-container *:data-[slot=alert-description]:text-on-error-container/80 [&>svg]:text-current",
+          "bg-error-container/30 text-on-error-container",
       },
     },
     defaultVariants: {
@@ -27,6 +27,7 @@ function Alert({
   return (
     <div
       data-slot="alert"
+      data-variant={variant ?? "default"}
       role="alert"
       className={cn(alertVariants({ variant }), className)}
       {...props}
@@ -55,7 +56,12 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "col-start-2 grid justify-items-start gap-1 text-sm text-muted-foreground [&_p]:leading-relaxed",
+        // Uses on-surface-variant for soft secondary text per DESIGN.md.
+        // Destructive variant overrides this via parent data-variant selector in CSS.
+        "col-start-2 grid justify-items-start gap-1 text-sm text-on-surface-variant [&_p]:leading-relaxed",
+        // When inside a destructive alert, inherit the error container foreground
+        "group-[]/destructive:text-on-error-container/80",
+        "[div[data-variant=destructive]_&]:text-on-error-container/80",
         className
       )}
       {...props}
@@ -64,3 +70,4 @@ function AlertDescription({
 }
 
 export { Alert, AlertTitle, AlertDescription }
+
